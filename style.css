@@ -1,0 +1,488 @@
+/* Variables para colores y tipografía */
+:root {
+    --primary-color: #eeff00;
+    --secondary-color: #ffffff;
+    --text-color: #fffefe;
+    --bg-color: #2c3e50;
+    --bg-hover: #edf040;
+}
+
+/* 1. Base y Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* 2. Estilos del Navbar (Escritorio) */
+.navbar {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2c3e50;
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky; 
+    top: 0;
+    z-index: 1000;
+    
+}
+
+.navbar-logo {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+.navbar-logo:hover {
+    color: var(--primary-color);
+}
+
+/* 3. Menú de Enlaces */
+.navbar-menu {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.navbar-link {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Animación de línea debajo del enlace */
+.navbar-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background-color: var(--primary-color);
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.navbar-link:hover {
+    color: var(--primary-color);
+}
+
+.navbar-link:hover::after {
+    width: 100%;
+}
+
+/* Estilo para el botón de llamada a la acción (CTA) */
+.navbar-link--cta {
+    background-color: var(--primary-color);
+    border-radius: 25px;
+    padding: 0.5rem 1.2rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    color: black;
+}
+
+.navbar-link--cta:hover {
+    background-color: var(--bg-hover);
+    transform: translateY(-2px); 
+    color: black; 
+}
+
+.navbar-link--cta::after {
+    display: none; 
+}
+
+
+/* 4. Toggle/Botón de Hamburguesa */
+.navbar-toggle {
+    display: none; 
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001;
+}
+
+.icon-bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px 0;
+    background-color: var(--text-color);
+    transition: all 0.3s ease-in-out; 
+}
+
+/* Estado Activo/Abierto del Toggle (Animación de la X) */
+.navbar-toggle.active .icon-bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+.navbar-toggle.active .icon-bar:nth-child(2) {
+    opacity: 0;
+}
+.navbar-toggle.active .icon-bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+
+/* 5. Responsividad y Despliegue (Móviles) */
+@media (max-width: 768px) {
+    .navbar-toggle {
+        display: block; 
+    }
+
+    .navbar-menu {
+        /* Estado inicial del menú desplegable */
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%; 
+        left: 0;
+        width: 100%;
+        background-color: var(--bg-color);
+        padding: 0; /* Quitamos el padding aquí */
+        box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+        
+        /* Animación: Oculto por defecto */
+        max-height: 0;
+        overflow: hidden;
+        /* CORRECCIÓN: Usar una curva de animación suave y tiempo adecuado */
+        transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* Estado cuando está abierto */
+    .navbar-menu.active {
+        max-height: 500px; /* Suficientemente grande para contener todos los enlaces */
+        padding: 1rem 0;
+    }
+    
+    .navbar-link {
+        padding: 0.8rem 2rem;
+        text-align: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        opacity: 0; /* Oculto por defecto para animar su aparición */
+    }
+    
+    /* Mostrar y animar los enlaces cuando el menú está activo (Efecto Cascada) */
+    .navbar-menu.active .navbar-link {
+        opacity: 1; 
+        transition: opacity 0.3s ease-in-out; 
+    }
+    
+    .navbar-menu.active .navbar-link:nth-child(1) { transition-delay: 0.1s; }
+    .navbar-menu.active .navbar-link:nth-child(2) { transition-delay: 0.2s; }
+    .navbar-menu.active .navbar-link:nth-child(3) { transition-delay: 0.3s; }
+    .navbar-menu.active .navbar-link:nth-child(4) { transition-delay: 0.4s; }
+    .navbar-menu.active .navbar-link:nth-child(5) { transition-delay: 0.5s; }
+    
+    /* Último enlace */
+    .navbar-link:last-child {
+        border-bottom: none;
+    }
+
+    .navbar-link--cta {
+        margin-top: 10px;
+        border-radius: 0;
+    }
+    
+    /* Ocultar la línea de hover en móvil */
+    .navbar-link::after {
+        display: none; 
+    }
+}
+
+
+
+section {
+  min-height: 100vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Animaciones al hacer scroll */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #ddeaff;
+  padding: 2rem;
+
+  
+  background-image: url('fondo-hero.jpg'); /* reemplaza con la ruta de tu imagen */
+  background-size: cover;   /* hace que la imagen cubra todo el hero */
+  background-position: center; /* centra la imagen */
+  background-repeat: no-repeat; /* evita que se repita */
+}
+
+.hero h1 {
+  margin: 0;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: clamp(2rem, 6vw, 3rem);
+  color: #eeff00;
+  font-family: "Playfair Display", serif;
+    
+    
+}
+
+
+
+.hero p {
+  margin-top: 1rem;
+  max-width: 60ch;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: #dbdbdb;
+  line-height: 1.5;
+}
+
+.about h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    
+}
+
+.about {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2rem;
+  background-color: #fafafa;
+}
+
+.about-image img {
+  width: 350px;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.about-text {
+    font-size: 20px;
+  max-width: 600px;
+  color: #333;
+}
+
+.services {
+  padding: 40px 5%;
+}
+
+.services h2 {
+  margin: 0 0 16px;
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 100px;
+}
+
+/* Lista responsiva */
+.services-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .services-list { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 960px) {
+  .services-list { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Item sencillo */
+.service-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 14px;
+  background: #fafafa;
+}
+
+.service-item h3 {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+}
+
+/* Línea separadora */
+.service-item hr {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 8px 0 10px;
+}
+
+/* Texto */
+.service-item p {
+  margin: 0;
+  color: #555;
+  font-size: 0.98rem;
+}
+
+.simple-section {
+  width: min(800px, 90%);
+  margin: 40px auto;
+}
+
+.simple-section h2 {
+  font-size: 3rem;
+    margin-bottom: 40px;
+  }
+
+.simple-section h3 {
+  color: #000;   /* Negro */
+  margin: 16px 0 6px;
+  font-size: 1.6rem;
+  gap: 10px;
+}
+
+.simple-section p {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  color: #555;
+}
+
+.contact {
+  width: min(1100px, 95%); /* más ancho */
+  margin: 60px auto;
+}
+
+.contact h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 3rem;
+  color: #000;
+}
+
+/* Card blanca más amplia */
+.contact-card {
+  background: #fff;
+  padding: 40px; /* más espacio interno */
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+/* Formulario */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contact-form label {
+  font-weight: bold;
+  color: #000;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #3b82f6;
+  outline: none;
+}
+
+.contact-form button {
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  padding: 16px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.contact-form button:hover {
+  background: #2563eb;
+}
+
+.footer {
+  background: #2c3e50; /* fondo oscuro */
+  color: #e5e7eb;
+  padding: 20px 10px; /* más compacto */
+  text-align: center;
+  position: relative;
+}
+
+/* Línea superior con efecto */
+.footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #eeff00, transparent);
+}
+
+.footer-content h3 {
+  margin: 0 0 8px;
+  font-size: 1.4rem;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+/* Links */
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+.footer-links a {
+  color: #eeff00;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #eeff00;
+  text-shadow: 0 0 6px #eeff00;
+}
+
+/* Texto inferior */
+.footer-copy {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
